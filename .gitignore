@@ -1,0 +1,33 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+
+# Build folders
+Debug/
+Release/
+x64/
+build/
+EmojisMod/Debug/
+EmojisMod/Release/
+EmojisMod/x64/
+
+# Build outputs
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.ipdb
+*.iobj
+*.lib
+*.exp
+*.dll.recipe
+*.exe.recipe
+*.log
+*.tlog
+*.pch
+
+# Archives
+*.zip

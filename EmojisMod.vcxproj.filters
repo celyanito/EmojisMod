@@ -1,49 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-		<Filter Include="Source Files\src" />
-		<Filter Include="Source Files\third_party" />
-		<Filter Include="Header Files\src" />
-		<Filter Include="Header Files\third_party" />
+    <ClInclude Include="src\app.h" />
+    <ClInclude Include="src\features\emoji_list.h" />
+    <ClInclude Include="src\features\emoji_replace.h" />
+    <ClInclude Include="src\framework.h" />
+    <ClInclude Include="src\hooks\chat_hook.h" />
+    <ClInclude Include="src\memory.h" />
+    <ClInclude Include="src\offsets.h" />
+    <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\tmuf.h" />
+    <ClInclude Include="third_party\MinHook.h" />
+    <ClInclude Include="third_party\buffer.h" />
+    <ClInclude Include="third_party\hde32.h" />
+    <ClInclude Include="third_party\pstdint.h" />
+    <ClInclude Include="third_party\table32.h" />
+    <ClInclude Include="third_party\trampoline.h" />
+    <ClInclude Include="src\features\chat_anim.h" />
+    <ClInclude Include="src\debug\ordinal_test.h" />
+    <ClInclude Include="src\ui\top_icon.h" />
+    <ClInclude Include="src\ui\debug_file_log.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Downloads\MinHook.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="trampoline.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="buffer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="hde32.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pstdint.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="table32.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hook.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hde32.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="trampoline.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="buffer.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="src\app.cpp" />
+    <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\features\emoji_list.cpp" />
+    <ClCompile Include="src\features\emoji_replace.cpp" />
+    <ClCompile Include="src\hooks\chat_hook.cpp" />
+    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\tmuf.cpp" />
+    <ClCompile Include="third_party\buffer.c" />
+    <ClCompile Include="third_party\hde32.c" />
+    <ClCompile Include="third_party\hook.c" />
+    <ClCompile Include="third_party\trampoline.c" />
+    <ClCompile Include="src\features\chat_anim.cpp" />
+    <ClCompile Include="src\debug\ordinal_test.cpp" />
+    <ClCompile Include="src\ui\top_icon.cpp" />
+    <ClCompile Include="src\ui\debug_file_log.cpp" />
   </ItemGroup>
 </Project>

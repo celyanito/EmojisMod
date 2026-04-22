@@ -1,4 +1,4 @@
-#include "chat_hook.h"
+﻿#include "chat_hook.h"
 
 #include <windows.h>
 #include <cstdio>
@@ -6,24 +6,19 @@
 
 #include "../../third_party/MinHook.h"
 #include "../features/emoji_replace.h"
+#include "../features/chat_anim.h"
 
 struct CGameNetwork;
 struct CGameNetFormAdmin;
 
-static constexpr uintptr_t RVA_OnChatReceived = 0x0021D250;
-static constexpr uintptr_t OFF_ChatTexts = 0x88;
+static constexpr std::uintptr_t RVA_OnChatReceived = 0x0021D250;
+static constexpr std::uintptr_t OFF_ChatTexts = 0x88;
 
 struct RawBuf
 {
     int count;
-    void* data;
+    RawChatLine* data;
     int capacity;
-};
-
-struct RawChatLine
-{
-    int len;
-    wchar_t* text;
 };
 
 using tOnChatReceived =
@@ -36,12 +31,12 @@ static bool gMinHookInitialized = false;
 static bool gHookInstalled = false;
 
 static int       gLastLineLen = -1;
-static uintptr_t gLastTextPtr = 0;
+static std::uintptr_t gLastTextPtr = 0;
 static wchar_t   gLastPrefix[16] = {};
 
-static uintptr_t GetExeBase()
+static std::uintptr_t GetExeBase()
 {
-    return reinterpret_cast<uintptr_t>(GetModuleHandleW(nullptr));
+    return reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr));
 }
 
 static bool SafeWideReadable(const wchar_t* s, int len)
@@ -99,26 +94,26 @@ static void PrintWideLine(const wchar_t* ws, int len)
     std::fflush(stdout);
 }
 
-static void TryPrintLatestChat(CGameNetwork* self, int param2)
+static void TryProcessLatestChat(CGameNetwork* self, int param2)
 {
     if (!self)
         return;
 
-    auto* buf = reinterpret_cast<RawBuf*>(reinterpret_cast<uintptr_t>(self) + OFF_ChatTexts);
+    auto* buf = reinterpret_cast<RawBuf*>(reinterpret_cast<std::uintptr_t>(self) + OFF_ChatTexts);
     if (!buf || buf->count <= 0 || !buf->data)
         return;
 
-    auto* line = reinterpret_cast<RawChatLine*>(buf->data);
+    auto* line = &buf->data[0];
 
     std::printf(
         "[CHATBUF] self=0x%08X data=0x%08X count=%d cap=%d p2=%d len=%d text=0x%08X\n",
-        static_cast<unsigned>(reinterpret_cast<uintptr_t>(self)),
-        static_cast<unsigned>(reinterpret_cast<uintptr_t>(buf->data)),
+        static_cast<unsigned>(reinterpret_cast<std::uintptr_t>(self)),
+        static_cast<unsigned>(reinterpret_cast<std::uintptr_t>(buf->data)),
         buf->count,
         buf->capacity,
         param2,
         line->len,
-        static_cast<unsigned>(reinterpret_cast<uintptr_t>(line->text))
+        static_cast<unsigned>(reinterpret_cast<std::uintptr_t>(line->text))
     );
     std::fflush(stdout);
 
@@ -132,16 +127,19 @@ static void TryPrintLatestChat(CGameNetwork* self, int param2)
     prefix[copyCount] = L'\0';
 
     if (gLastLineLen == line->len &&
-        gLastTextPtr == reinterpret_cast<uintptr_t>(line->text) &&
+        gLastTextPtr == reinterpret_cast<std::uintptr_t>(line->text) &&
         SamePrefix(gLastPrefix, prefix, 16))
     {
         return;
     }
 
     gLastLineLen = line->len;
-    gLastTextPtr = reinterpret_cast<uintptr_t>(line->text);
+    gLastTextPtr = reinterpret_cast<std::uintptr_t>(line->text);
     for (int i = 0; i < 16; ++i)
         gLastPrefix[i] = prefix[i];
+
+    chat_anim::SetNetwork(self);
+    chat_anim::TrackRawLine(line);
 
     PrintWideLine(line->text, line->len);
 
@@ -165,17 +163,17 @@ static void __fastcall Hooked_OnChatReceived(
     if (gOrigOnChatReceived)
         gOrigOnChatReceived(self, formAdmin, param2);
 
-    TryPrintLatestChat(self, param2);
+    TryProcessLatestChat(self, param2);
 }
 
 bool ChatHook_Install()
 {
-    const uintptr_t base = GetExeBase();
+    const std::uintptr_t base = GetExeBase();
     gTargetOnChatReceived = reinterpret_cast<void*>(base + RVA_OnChatReceived);
 
     std::printf("[+] EXE base        = 0x%08X\n", static_cast<unsigned>(base));
     std::printf("[+] OnChatReceived = 0x%08X\n",
-        static_cast<unsigned>(reinterpret_cast<uintptr_t>(gTargetOnChatReceived)));
+        static_cast<unsigned>(reinterpret_cast<std::uintptr_t>(gTargetOnChatReceived)));
     std::fflush(stdout);
 
     MH_STATUS st = MH_Initialize();
@@ -222,8 +220,15 @@ bool ChatHook_Install()
     return true;
 }
 
+void ChatHook_Tick()
+{
+    chat_anim::Tick();
+}
+
 void ChatHook_Remove()
 {
+    chat_anim::Clear();
+
     if (gHookInstalled && gTargetOnChatReceived)
     {
         MH_DisableHook(gTargetOnChatReceived);

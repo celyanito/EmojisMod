@@ -136,6 +136,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\app.h" />
+    <ClInclude Include="src\debug\ordinal_test.h" />
+    <ClInclude Include="src\features\chat_anim.h" />
     <ClInclude Include="src\features\emoji_list.h" />
     <ClInclude Include="src\features\emoji_replace.h" />
     <ClInclude Include="src\framework.h" />
@@ -144,6 +146,8 @@
     <ClInclude Include="src\offsets.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\tmuf.h" />
+    <ClInclude Include="src\ui\debug_file_log.h" />
+    <ClInclude Include="src\ui\top_icon.h" />
     <ClInclude Include="third_party\MinHook.h" />
     <ClInclude Include="third_party\buffer.h" />
     <ClInclude Include="third_party\hde32.h" />
@@ -153,12 +157,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\app.cpp" />
+    <ClCompile Include="src\debug\ordinal_test.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\features\chat_anim.cpp" />
     <ClCompile Include="src\features\emoji_list.cpp" />
     <ClCompile Include="src\features\emoji_replace.cpp" />
     <ClCompile Include="src\hooks\chat_hook.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\tmuf.cpp" />
+    <ClCompile Include="src\ui\debug_file_log.cpp" />
+    <ClCompile Include="src\ui\top_icon.cpp" />
     <ClCompile Include="third_party\buffer.c" />
     <ClCompile Include="third_party\hde32.c" />
     <ClCompile Include="third_party\hook.c" />

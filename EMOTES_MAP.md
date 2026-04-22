@@ -1,49 +1,49 @@
-# Emotes map (pack font)
+﻿
+Emotes map (font pack)
 
-Format :
+Format:
 
-- token chat : `:name:`
-- remplacement local : code du font pack du style `$fffX`
+chat token: :name:
+local replacement: font-pack code such as $fffX
+Useful examples already tested or close to tested
+:wave: -> $fff回
+:fire: -> $fff们
+:HYPERS: -> $fff我
+:Kappa: -> $fff目
+:KEKW: -> $fff战
+:OMEGALUL: -> $fff佳
+:Prayge: -> $fff源
+:COPIUM: -> $fff挑
+:Clap: -> $fff系
+:catRose: -> $fff联
+:disbelief: -> $fff火
+:WAJAJA: -> $fff建
+:thonk: -> $fff测
+:angry: -> $fff连
+:pikawow: -> $fff车
+:goggers: -> $fff竞
+:sniffa: -> $fff飙
+:cowJAM: -> $fff录
+:HUH: -> $fff需
+:bonk: -> $fff主
+:skull: -> $fff问
+:heart: -> $fff被
+:popcorn: -> $fff和
+:turtle: -> $fff您
+:pray: -> $fff试
+:brain: -> $fff可
+:nerd: -> $fff能
+Important note
 
-## Exemples utiles déjà testés / proches du test
+Some tokens are shorter than the full replacement string $fffX.
 
-- `:wave:` -> `$fff回`
-- `:fire:` -> `$fff们`
-- `:HYPERS:` -> `$fff我`
-- `:Kappa:` -> `$fff目`
-- `:KEKW:` -> `$fff战`
-- `:OMEGALUL:` -> `$fff佳`
-- `:Prayge:` -> `$fff源`
-- `:COPIUM:` -> `$fff挑`
-- `:Clap:` -> `$fff系`
-- `:catRose:` -> `$fff联`
-- `:disbelief:` -> `$fff火`
-- `:WAJAJA:` -> `$fff建`
-- `:thonk:` -> `$fff测`
-- `:angry:` -> `$fff连`
-- `:pikawow:` -> `$fff车`
-- `:goggers:` -> `$fff竞`
-- `:sniffa:` -> `$fff飙`
-- `:cowJAM:` -> `$fff录`
-- `:HUH:` -> `$fff需`
-- `:bonk:` -> `$fff主`
-- `:skull:` -> `$fff问`
-- `:heart:` -> `$fff被`
-- `:popcorn:` -> `$fff和`
-- `:turtle:` -> `$fff您`
-- `:pray:` -> `$fff试`
-- `:brain:` -> `$fff可`
-- `:nerd:` -> `$fff能`
+Example:
 
-## Remarque importante
+:o7: is very short
+desired replacement: $fff迹
 
-Certains tokens sont plus courts que le remplacement complet `$fffX`.
+In those cases, a shrink-only in-place replacement is not enough.
+You will likely need either:
 
-Exemple :
-- `:o7:` est très court
-- remplacement souhaité : `$fff迹`
-
-Dans ces cas-là, un remplacement **in-place shrink-only** ne suffit plus forcément.
-Il faudra soit :
-- une vraie réallocation,
-- soit une autre stratégie de composition/formatage.
+a real reallocation,
+or a different composition / formatting strategy

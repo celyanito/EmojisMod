@@ -1,63 +1,53 @@
-# Reverse notes — TMUF chat
+﻿# Reverse notes — TMUF chat
 
-## Fonction clé
+## Key function
 
 - `CGameNetwork::OnChatReceived`
-  - hook stable avec MinHook sur le build actuel.
-  - point d'entrée idéal pour capter les messages reçus avant affichage local final.
+  - stable MinHook hook on the current build
+  - ideal entry point to capture received messages before final local display
 
-## Buffer chat confirmé
+## Confirmed chat buffer
 
-Dans `CGameNetwork` :
+Inside `CGameNetwork`:
 
-- `field_0x88` = historique des textes de chat.
-- Layout observé du buffer :
+- `field_0x88` = chat text history
+- Observed buffer layout:
 
 ```cpp
 struct RawBuf {
     int count;
     void* data;
     int capacity;
-};
-```
+};Likely chat line layout
 
-## Layout probable des lignes
+The data pointer inside the buffer points to an array of 8-byte entries observed as:
 
-Le `data` du buffer pointe sur un tableau d'entrées de 8 octets observées comme :
-
-```cpp
 struct RawChatLine {
     int len;
     wchar_t* text;
 };
-```
 
-Comportement observé :
-- index `0` = message le plus récent.
-- quand un nouveau message arrive, l'historique est inséré en tête.
+Observed behavior:
 
-## Limite d'historique
+index 0 = most recent message
+when a new message arrives, history is inserted at the front
+History limit
 
-Après insertion, le jeu ramène la taille des buffers `0x88 / 0x94 / 0xA0` à une limite lue autour de `field_0xB0`.
-En pratique observée : **~40 lignes max**.
+After insertion, the game reduces the size of buffers 0x88 / 0x94 / 0xA0 to a limit read around field_0xB0.
+In practice: ~40 lines max.
 
-## Ce qui a marché
-
-- Hook de `OnChatReceived`.
-- Lecture du buffer chat après appel à l'original.
-- Lecture des lignes en wide (`wchar_t*`).
-- Modification locale en place du texte reçu.
-- Remplacement de tokens style `:wave:` même au milieu d'un message.
-
-## Ce qui a posé problème avant
-
-- Hook manuel inline 5 bytes : instable à cause du prologue/SEH/security cookie.
-- Tentative d'utiliser `GetUtf8` dans cette voie : crashs sur ce build.
-- Anti-duplication basé seulement sur `count` et `data` : faux positif quand le buffer se stabilise.
-
-## Direction recommandée
-
-- Rester sur `OnChatReceived`.
-- Modifier `wchar_t* text` en place après retour de l'original.
-- Matching insensible à la casse.
-- Pour les remplacements plus longs que le token, prévoir une vraie stratégie de réallocation ou de buffer secondaire.
+What worked
+Hooking OnChatReceived
+Reading the chat buffer after calling the original function
+Reading wide strings (wchar_t*)
+Local in-place modification of the received text
+Replacing tokens like :wave: even in the middle of a message
+What caused problems before
+Manual 5-byte inline hook: unstable because of prologue / SEH / security cookie issues
+Attempting to use GetUtf8 in this path: crashes on this build
+Anti-duplication based only on count and data: false positives when the buffer stabilizes
+Recommended direction
+Stay on OnChatReceived
+Modify wchar_t* text in place after the original returns
+Use case-insensitive matching
+For replacements longer than the token, implement a proper reallocation or secondary-buffer strategy

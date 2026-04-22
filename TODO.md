@@ -1,22 +1,22 @@
-# TODO
+﻿# TODO
 
-## Court terme
+## Short term
 
-- [ ] Stabiliser le remplacement sur tous les messages sans faux doublons.
-- [ ] Centraliser la table d'emotes.
-- [ ] Rendre le matching entièrement insensible à la casse.
-- [ ] Logguer proprement seulement la ligne 0 réelle.
+- [ ] Stabilize replacement on all messages without false duplicates.
+- [ ] Centralize the emote table.
+- [ ] Make matching fully case-insensitive.
+- [ ] Log only the real line 0 cleanly.
 
-## Moyen terme
+## Medium term
 
-- [ ] Gérer les remplacements qui agrandissent la chaîne.
-- [ ] Distinguer les messages système des messages joueur si nécessaire.
-- [ ] Tester l'invalidation éventuelle du cache formaté si besoin visuel.
-- [ ] Ajouter un mini mode debug activable/désactivable.
+- [ ] Handle replacements that increase the string length.
+- [ ] Distinguish system messages from player messages if needed.
+- [ ] Test whether formatted-cache invalidation is needed for visual refresh.
+- [ ] Add a small debug mode that can be enabled or disabled.
 
-## Long terme
+## Long term
 
-- [ ] Créer un vrai module propre séparé du seul `dllmain.cpp`.
-- [ ] Ajouter config externe pour la map d'emotes.
-- [ ] Prévoir support de plusieurs packs de fonts.
-- [ ] Documenter les offsets/fonctions par build.
+- [ ] Create a proper clean module instead of keeping everything centered around `dllmain.cpp`.
+- [ ] Add external configuration for the emote map.
+- [ ] Plan support for multiple font packs.
+- [ ] Document offsets and functions for each build.

@@ -1,5 +1,10 @@
-﻿## EmojisMod v1.0.1
+﻿
+EmojisMod v1.0.1
 
-Première release publique du mod d'emojis local pour TMUF.
+First public release of the local TMUF emoji mod.
 
-Téléchargez **EmojisMod-v1.0.1.zip** dans les assets.
+Changes
+Removed the UI chat hook console.
+Download
+
+Download EmojisMod-1.0.1.zip from the release assets.

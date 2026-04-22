@@ -32,3 +32,5 @@ EmojisMod/x64/
 # Archives
 *.zip
 description.yaml
+
+dist/
